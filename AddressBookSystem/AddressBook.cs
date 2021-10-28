@@ -8,7 +8,15 @@ namespace AddressBookSystem
 {
     class AddressBook
     {
-        public List<ContactList> contacts = new List<ContactList>();
+        //declaring a list with the class Contacts.
+        public static List<ContactList> contacts1 = new List<ContactList>();
+        //declaring dictionary with the already declared list inside of it as the value pair
+        public static Dictionary<string, List<ContactList>> addressBook = new Dictionary<string, List<ContactList>>();
+        //declaring it static so that we dont need to create an object in the program.cs
+        public static void AddTo(string name)              //this method is used to pass the new address book name to the dictionary
+        {
+            addressBook.Add(name, contacts1);
+        }
         public void AddContact()
         {
             //creating object of ContactDetails class
@@ -38,11 +46,11 @@ namespace AddressBookSystem
             Console.WriteLine("Enter zip");
             contact.zip = Console.ReadLine();
 
-            contacts.Add(contact);
+            contacts1.Add(contact);  //adding to the list
         }
         public void View()
         {
-            if (contacts.Count == 0)   // this if statement shows that there is nothing in the list
+            if (contacts1.Count == 0)                                       // this if statement shows that there is nothing in the list
             {
                 Console.WriteLine("Currently there are no people added in your addressbook.");
             }
@@ -50,7 +58,7 @@ namespace AddressBookSystem
             {
                 Console.WriteLine("Here is the list and details of all the contacts in your addressbook.");
 
-                foreach (var Detailing in contacts)  //this foreacch loops iterates through all the contacts objects in the contacts class
+                foreach (var Detailing in contacts1)                  //this foreacch loops iterates through all the contacts objects in the contacts class
                 {
 
                     Console.WriteLine("first name = " + Detailing.firstName);
@@ -64,12 +72,12 @@ namespace AddressBookSystem
                 }
             }
         }
-        public void Edit()  //this method lets the user edit the details based on their firstname
+        public void Edit()                          //this method lets the user edit the details based on their firstname
         {
             Console.WriteLine("Enter the first name of the contact you want to Modify.");
             Console.WriteLine();
-            string fName = Console.ReadLine(); // taking the input of first name
-            foreach (var Details in contacts)
+            string fName = Console.ReadLine();      // taking the input of first name
+            foreach (var Details in contacts1)
             {
                 if (fName == Details.firstName)
                 {
@@ -104,15 +112,15 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Enter the first name of the contact you want to Remove.");
             Console.WriteLine();
-            string fname = Console.ReadLine();  // take the input of first name
-            foreach (var Details in contacts)
+            string fname = Console.ReadLine();      // take the input of first name
+            foreach (var Details in contacts1)
             {
                 if (fname == Details.firstName)
                 {
                     Console.WriteLine("Do you want to delete this Contact? (y/n).");
                     if (Console.ReadKey().Key == ConsoleKey.Y)
                     {
-                        contacts.Remove(Details);
+                        contacts1.Remove(Details);
                         Console.WriteLine("\nContact is Deleted.");
                         break;
                     }
