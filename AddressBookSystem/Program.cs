@@ -6,18 +6,29 @@ namespace AddressBookSystem
     {
         static void Main(string[] args)
         {
-            ContactList contact = new ContactList();
-            contact.firstName = "Rakesh";
-            contact.lastName = "Musale";
-            contact.phoneNumber = "8007078569";
-            contact.address = "Pune";
-            contact.state = "Maharashtra";
-            contact.email = "rakeshmusale111@gmail.com";
-            contact.city = "Pune";
-            contact.zip = "411013";
+            int num;
+            //guide to user 
+            Console.WriteLine("_Welcome to the address book program_");
+            Console.WriteLine();
+            Console.WriteLine("Select the option.");
+            Console.WriteLine("1- Add contact, 2- View contact");
+            num = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
 
-            Console.WriteLine("\n First Name: {0} \n Last Name: {1} \n Address: {2} \n Phone Number: {3}\n Email: {4} \n City: {5} \n State: {6}\n ZipCode: {7}", contact.firstName, contact.lastName, contact.address, contact.phoneNumber, contact.email, contact.city, contact.state, contact.zip);
+            switch (num)               //switch case 
+            {
+                case 1:
+                    AddressBook AddObj = new AddressBook();
+                    AddObj.AddContact();
+                    AddObj.View();
+                    break;
+
+                case 2:
+                    AddressBook Addobj2 = new AddressBook();
+                    Addobj2.View();
+                    break;
+            }
             Console.ReadLine();
         }
-    }
+    } 
 }
