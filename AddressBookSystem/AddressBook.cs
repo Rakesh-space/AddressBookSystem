@@ -131,5 +131,30 @@ namespace AddressBookSystem
                 }
             }
         }
+
+        public static ContactList Equals(List<ContactList> list, String name) //here find out dublicate entry by using equals method
+        {
+            try
+            {
+                Console.WriteLine("\n here Findout the Dublicate Entry");
+                var contactObj = list.Find(p => p.firstName == name);
+
+                if (contactObj != null)
+                { 
+                    Console.WriteLine("\n Dublicate is Present:", contactObj.firstName);
+                    return contactObj;
+                }
+                else
+                {
+                    Console.WriteLine("\n Dublicate is Not present.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }
