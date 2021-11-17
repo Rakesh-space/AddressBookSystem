@@ -31,7 +31,7 @@ namespace AddressBookSystem
 
                  while (keyPress != "\n")
                  {
-                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact");
+                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact");
                      num = Convert.ToInt32(Console.ReadLine());
 
                      switch (num)               //switch case 
@@ -51,6 +51,10 @@ namespace AddressBookSystem
                          case 4:
                              AddObj.Delete();                                  //method to delete the contacts
                              break;
+
+                        case 5:
+                            AddressBook.SearchName(list,"Rakesh");
+                            break;
                      }
                      Console.WriteLine("Do you wish to continue? Press (y/n)");
                      keyPress = Console.ReadLine();

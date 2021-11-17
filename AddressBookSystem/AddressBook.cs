@@ -137,7 +137,7 @@ namespace AddressBookSystem
             try
             {
                 Console.WriteLine("\n here Findout the Dublicate Entry");
-                var contactObj = list.Find(p => p.firstName == name);
+                var contactObj = list.Find(p => p.firstName == name);  //here use lamda concepts
 
                 if (contactObj != null)
                 { 
@@ -151,6 +151,30 @@ namespace AddressBookSystem
                 }
             }
             catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            } 
+        }
+
+        public static ContactList SearchName(List<ContactList> list,String name)  //here find out search person
+        {
+            var contObj = list.Find(p => p.firstName == name); //here use lamda concepts
+
+            try
+            {
+                if(contObj != null)
+                {
+                    Console.WriteLine("\n Present :",contObj.firstName);
+                    return contObj;
+                }
+                else 
+                {
+                    Console.WriteLine("\n Not Present.");
+                    return contObj;
+                }
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
