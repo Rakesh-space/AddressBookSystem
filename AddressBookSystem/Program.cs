@@ -32,7 +32,7 @@ namespace AddressBookSystem
 
                  while (keyPress != "\n")
                  {
-                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact");
+                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact, 6-SearchingByCity, 7-SearchingByState");
                      num = Convert.ToInt32(Console.ReadLine());
 
                      switch (num)               //switch case 
@@ -55,6 +55,14 @@ namespace AddressBookSystem
 
                         case 5:
                             AddressBook.SearchName(list,"Rakesh");
+                            break;
+
+                        case 6:
+                            AddObj.SearchingByCity();
+                            break;
+
+                        case 7:
+                            AddObj.SearchingByState();
                             break;
                      }
                      Console.WriteLine("Do you wish to continue? Press (y/n)");
