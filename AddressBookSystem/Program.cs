@@ -50,7 +50,7 @@ namespace AddressBookSystem
                              break;
 
                          case 4:
-                             AddObj.Delete();                                  //method to delete the contacts
+                            AddressBook.Delete(dict,list);         //method to delete the contacts
                              break;
 
                         case 5:

@@ -70,7 +70,7 @@ namespace AddressBookSystem
         }
 
 
-        public void Delete(Dictionary<string, List<ContactList>> addressBook, List<ContactList> contacts1)
+        public static void Delete(Dictionary<string, List<ContactList>> addressBook, List<ContactList> contacts1)
         {
 
             Console.WriteLine("\nEnter Name of address book to delete contact details");
