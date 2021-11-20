@@ -21,27 +21,48 @@ namespace AddressBookSystem
         {
             addressBook.Add(name, contacts1);
         }
-        public void AddContact()
+       // public List<ContactList> contacts = new List<ContactList>();
+        public static void AddContact(KeyValuePair<string, List<ContactList>> keyValue)  
         {
-            Console.WriteLine("\nEnter Name of address book to add new contact");
-            string name = Console.ReadLine();
-            //checking, if the name is existing in the dictionary
-            if (!addressBook.ContainsKey(name))
-            {
-                Console.WriteLine("No address book found with this name");
-                Console.WriteLine("Please Enter Valid Name from following names:");
-                //displaying the available dictionary names
-                foreach (KeyValuePair<string, List<ContactList>> tempPair in addressBook)
-                {
-                    Console.WriteLine(tempPair.Key);
-                }
+            //creating object of ContactDetails class
+
+            ContactList contact = new ContactList();
+            Console.WriteLine("Enter First Name");
+            contact.firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter Last Name");
+            contact.lastName = Console.ReadLine();
+
+            Console.WriteLine("Enter address Name");
+            contact.address = Console.ReadLine();
+
+            Console.WriteLine("Enter phone number");
+            contact.phoneNumber = Console.ReadLine();
+
+            Console.WriteLine("Enter email ID");
+            contact.email = Console.ReadLine();
+
+            Console.WriteLine("Enter city Name");
+            contact.city = Console.ReadLine();
+
+            Console.WriteLine("Enter state Name");
+            contact.state = Console.ReadLine();
+
+            Console.WriteLine("Enter zip");
+            contact.zip = Console.ReadLine();
+
+            contacts1.Add(contact);
+
+
+            var newDetails = addressBook.OrderBy(x => x.Value);  //here use " LAMDA " expressions
+
+            foreach (var contact2 in newDetails)
+            { 
+                Console.WriteLine("Address Book of {0} ", contact2.Value);
             }
-            else
-            {
-                ContactList contactList = new ContactList();  //here create a ContactList object
-                contacts1.Add(contactList);  //here contactlist object adding to dictionary
-            }
+
         }
+    
         public void View()  //here Display the data by using Dictionary
         {
             Console.WriteLine("Here is the list and details of all the contacts in your addressbook.");

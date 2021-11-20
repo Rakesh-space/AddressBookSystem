@@ -14,7 +14,7 @@ namespace AddressBookSystem
              //guide to user 
              Console.WriteLine("_Welcome to the address book program_");
              Console.WriteLine();
-             Console.WriteLine("Enter the number of Address Books you want to add:");
+            Console.WriteLine("Enter the number of Address Books you want to add:");
              Console.WriteLine();
 
              int numAddBook = Convert.ToInt32(Console.ReadLine());          //taking user inputs about the number of add books needed
@@ -38,7 +38,7 @@ namespace AddressBookSystem
                      switch (num)               //switch case 
                      {
                          case 1:
-                             AddObj.AddContact();
+                            AddressBook.AddContact(list, "Rakesh");
                              break;
 
                          case 2:
