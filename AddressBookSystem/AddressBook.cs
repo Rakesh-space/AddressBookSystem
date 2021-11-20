@@ -12,6 +12,9 @@ namespace AddressBookSystem
         public static List<ContactList> contacts1 = new List<ContactList>();
         //declaring dictionary with the already declared list inside of it as the value pair
         public static Dictionary<string, List<ContactList>> addressBook = new Dictionary<string, List<ContactList>>();
+
+        public HashSet<string> cityList = new HashSet<string>();
+        public HashSet<string> stateList = new HashSet<string>();
         //declaring it static so that we dont need to create an object in the program.cs
 
         public static void AddTo(string name)              //this method is used to pass the new address book name to the dictionary
@@ -209,6 +212,47 @@ namespace AddressBookSystem
                 {
                     Console.WriteLine("No state entered");
 
+                }
+            }
+        }
+
+       
+        // Getting city names is used to get all the names of city in all address books
+     
+        public void GettingCityNames()
+        {
+            //calling each address book
+            foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
+            {
+                ContactList contactList = new ContactList();  //here create a ContactList object
+                contacts1.Add(contactList);  //here contactlist object adding to dictionary
+
+                //calling method Getting CityList from contactperson information
+                //getting city list returns a hashset of cities in particular address book
+                //the cities are then added in new hashmap called citylist defined in this class
+                foreach (string city in contactList.city)
+                {
+                    cityList.Add(city);
+                }
+            }
+        }
+
+        // Getting city names is used to get all the names of city in all address books
+        
+        public void GettingStateNames()
+        {
+            //calling each address book
+            foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
+            {
+                ContactList contactList = new ContactList();  //here create a ContactList object
+                contacts1.Add(contactList);  //here contactlist object adding to dictionary
+
+                //calling method Getting StateList from contactperson information
+                //getting state list returns a hashset of cities in particular address book
+                //the cities are then added in new hashmap called statelist defined in this class
+                foreach (string state in contactList.state)
+                {
+                    stateList.Add(state);
                 }
             }
         }

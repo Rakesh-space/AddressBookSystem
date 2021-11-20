@@ -9,8 +9,8 @@ namespace AddressBookSystem
          static void Main(string[] args)
          {
               List<ContactList> list = new List<ContactList>();
-            Dictionary<string, List<ContactList>> dict = new Dictionary<string, List<ContactList>>();
-             int num;
+              Dictionary<string, List<ContactList>> dict = new Dictionary<string, List<ContactList>>();
+              int num;
              //guide to user 
              Console.WriteLine("_Welcome to the address book program_");
              Console.WriteLine();
@@ -32,7 +32,7 @@ namespace AddressBookSystem
 
                  while (keyPress != "\n")
                  {
-                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact, 6-SearchingByCity, 7-SearchingByState");
+                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact, 6-SearchingByCity, 7-SearchingByState, 8-GettingCityNames, 9-GettingStateNames");
                      num = Convert.ToInt32(Console.ReadLine());
 
                      switch (num)               //switch case 
@@ -63,6 +63,14 @@ namespace AddressBookSystem
 
                         case 7:
                             AddObj.SearchingByState();
+                            break;
+
+                        case 8:
+                            AddObj.GettingCityNames();
+                            break;
+                             
+                        case 9:
+                            AddObj.GettingStateNames();
                             break;
                      }
                      Console.WriteLine("Do you wish to continue? Press (y/n)");
