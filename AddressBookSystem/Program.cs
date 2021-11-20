@@ -9,6 +9,7 @@ namespace AddressBookSystem
          static void Main(string[] args)
          {
               List<ContactList> list = new List<ContactList>();
+            Dictionary<string, List<ContactList>> dict = new Dictionary<string, List<ContactList>>();
              int num;
              //guide to user 
              Console.WriteLine("_Welcome to the address book program_");
@@ -41,7 +42,7 @@ namespace AddressBookSystem
                              break;
 
                          case 2:
-                             AddObj.View();
+                            AddObj.View();
                              break;
 
                          case 3:
