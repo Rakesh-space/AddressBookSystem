@@ -1,85 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using AddressBook;
 using AddressBookSystem;
 
 namespace AddressBookSystem
 {
-    class Program
+    public class Program
     {
-         static void Main(string[] args)
-         {
-              List<ContactList> list = new List<ContactList>();
-              Dictionary<string, List<ContactList>> dict = new Dictionary<string, List<ContactList>>();
-              int num;
-             //guide to user 
-             Console.WriteLine("_Welcome to the address book program_");
-             Console.WriteLine();
-            Console.WriteLine("Enter the number of Address Books you want to add:");
-             Console.WriteLine();
 
-             int numAddBook = Convert.ToInt32(Console.ReadLine());          //taking user inputs about the number of add books needed
-             int numberBook = 0;
-             Console.WriteLine();
-             while (numberBook < numAddBook)                                //this while loop runs till the favourable no. of add books are created
-             {
-                 Console.WriteLine("Enter the name of the address book");
-                 string book = Console.ReadLine();                         //taking the add book name as input
-                 Console.WriteLine("Select the option that you would like to perform.");
-                 Console.WriteLine();
-                 //declaring address book object to be used in the below cases
-                 AddressBook AddObj = new AddressBook();
-                 string keyPress = "o";
+        static void Main(string[] args)
+        {
+            AddressBook bookClass = new AddressBook(); // creating object of class
+            string yes = "y";
+            string y;
 
-                 while (keyPress != "\n")
-                 {
-                     Console.WriteLine("1- Add contact, 2- View contact,3-edit contact,4-delete contact,5-Search contact, 6-SearchingByCity, 7-SearchingByState, 8-GettingCityNames, 9-GettingStateNames");
-                     num = Convert.ToInt32(Console.ReadLine());
 
-                     switch (num)               //switch case 
-                     {
-                         case 1:
-                            AddressBook.AddContact(list, "Rakesh");
-                             break;
+            Console.WriteLine("enter the address book name");
+            string bookName = Console.ReadLine();
 
-                         case 2:
-                            AddObj.View();
-                             break;
+             Dictionary<AddressBook, string> dic = new Dictionary<AddressBook, string>();
+            dic.Add(bookClass, bookName);
+   
+            do
+            {
 
-                         case 3:
-                             AddObj.Edit();
-                             break;
+                Console.WriteLine("Welcome to Address Book");
+                Console.WriteLine("1.AddNewContact\n2.ShowContact\n3.EditContact\n4.RemoveContact\n5.Display");
+                Console.WriteLine("\nEnter your choice");
+                int ch = Convert.ToInt32(Console.ReadLine());
 
-                         case 4:
-                            AddressBook.Delete(dict,list);         //method to delete the contacts
-                             break;
 
-                        case 5:
-                            AddressBook.SearchName(list,"Rakesh");
-                            break;
+                switch (ch)
+                {
 
-                        case 6:
-                            AddObj.SearchingByCity();
-                            break;
+                    case 1:
+                        Console.WriteLine("how many contact you want to add:");
+                        int n = Convert.ToInt32(Console.ReadLine());
+                        for (int i = 0; i < n; i++)
+                        {
+                            bookClass.GetContactDetails();
+                        }
+                        break;
+                    case 2:
+                        bookClass.ContactDetails();
+                        break;
 
-                        case 7:
-                            AddObj.SearchingByState();
-                            break;
+                    case 3:
+                        bookClass.editContact();
+                        break;
 
-                        case 8:
-                            AddObj.GettingCityNames();
-                            break;
-                             
-                        case 9:
-                            AddObj.GettingStateNames();
-                            break;
-                     }
-                     Console.WriteLine("Do you wish to continue? Press (y/n)");
-                     keyPress = Console.ReadLine();
-                 }
-                 AddressBook.AddTo(book);                         //calling the AddTo method to add the new address book in the dictionary
-                 numberBook++;                                    //incrementing the variable
-             }
-             Console.ReadLine();
-         }
-     } 
+                    case 4:
+                        bookClass.removeContact();
+                        break;
+
+                    case 5:
+                        AddressBook.Display(dic);
+                        break;
+
+                    default:
+                        break;
+                }
+                Console.WriteLine("\ndo you want to continue? press...y/n");
+                y = Console.ReadLine();
+
+
+            } while (yes == y);
+            Console.ReadLine();
+            //Display contacts using StreamReader UC13
+            AddressBookFileOperations.ReadAddressBookUsingStreamReader();
+        }
+
+      
+    } 
 }

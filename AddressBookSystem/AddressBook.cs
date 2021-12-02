@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddressBook;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,276 +7,195 @@ using System.Threading.Tasks;
 
 namespace AddressBookSystem
 {
-    class AddressBook
+    public class AddressBook
     {
-        //declaring a list with the class Contacts.
-        public static List<ContactList> contacts1 = new List<ContactList>();
-        //declaring dictionary with the already declared list inside of it as the value pair
-        public static Dictionary<string, List<ContactList>> addressBook = new Dictionary<string, List<ContactList>>();
+        /// <summary>
+        /// The address book
+        /// </summary>
+        private LinkedList<ContactList> addressBook = new LinkedList<ContactList>();  //here created the empty LinkedList object 
 
-        public HashSet<string> cityList = new HashSet<string>();
-        public HashSet<string> stateList = new HashSet<string>();
-        //declaring it static so that we dont need to create an object in the program.cs
 
-        public static void AddTo(string name)              //this method is used to pass the new address book name to the dictionary
+        public string firstName;
+        public string lastName;
+        public string[] address = new string[2];
+        public string state;
+        public int zipCode;
+        public long phoneNumber;
+        public string email;
+
+        /// <summary>
+        /// Gets the contact details.
+        /// </summary>
+
+
+        public void GetContactDetails()   // creating contact details of person
         {
-            addressBook.Add(name, contacts1);
+
+
+            Console.WriteLine("Enter the First Name");
+            firstName = Console.ReadLine();
+
+
+            Console.WriteLine("Enter the Last Name");
+            lastName = Console.ReadLine();
+
+            Console.WriteLine("Enter the Adresss");
+            address[0] = Console.ReadLine();
+
+
+
+            Console.WriteLine("Enter the State");
+            state = Console.ReadLine();
+
+
+            Console.WriteLine("Enter the Zip Code");
+            zipCode = Convert.ToInt32(Console.ReadLine());
+
+
+            Console.WriteLine("Enter the Phone Number");
+
+            phoneNumber = Convert.ToInt64(Console.ReadLine());
+
+
+            Console.WriteLine("Enter the Email");
+            email = Console.ReadLine();
+
+            ContactList contactList = new ContactList();
+
+
+            this.addressBook.AddLast(contactList);
+
+            //for File Operations
+            // AddressBookFileOperations.WriteAddressBookUsingStreamWriter(firstName, lastName, address, state, zipCode, phoneNumber, email);
+
+            //For Csv operations
+            AddressBookUsingCSV.CsvSerialise(addressBook);
+
+            //For Json File
+            //AddressBookUsingJson.JsonSerializeAddressBook(addressBook);
+
+
+
         }
-       // public List<ContactList> contacts = new List<ContactList>();
-        public static void AddContact(KeyValuePair<string, List<ContactList>> keyValue)  
+
+        public void ContactDetails()  //Displaying contact details
         {
-            //creating object of ContactDetails class
 
-            ContactList contact = new ContactList();
-            Console.WriteLine("Enter First Name");
-            contact.firstName = Console.ReadLine();
-
-            Console.WriteLine("Enter Last Name");
-            contact.lastName = Console.ReadLine();
-
-            Console.WriteLine("Enter address Name");
-            contact.address = Console.ReadLine();
-
-            Console.WriteLine("Enter phone number");
-            contact.phoneNumber = Console.ReadLine();
-
-            Console.WriteLine("Enter email ID");
-            contact.email = Console.ReadLine();
-
-            Console.WriteLine("Enter city Name");
-            contact.city = Console.ReadLine();
-
-            Console.WriteLine("Enter state Name");
-            contact.state = Console.ReadLine();
-
-            Console.WriteLine("Enter zip");
-            contact.zip = Console.ReadLine();
-
-            contacts1.Add(contact);
-
-
-            var newDetails = addressBook.OrderBy(x => x.Value);  //here use " LAMDA " expressions
-
-            foreach (var contact2 in newDetails)
-            { 
-                Console.WriteLine("Address Book of {0} ", contact2.Value);
-            }
-
-        }
-    
-        public void View()  //here Display the data by using Dictionary
-        {
-            Console.WriteLine("Here is the list and details of all the contacts in your addressbook.");
-            foreach (KeyValuePair<string, List<ContactList>> kv in addressBook)  //this foreacch loops iterates through all the contacts objects in the contacts class
+            if (addressBook.Count == 0)  //here checking in List there is contact or not  if no the lis is empty
             {
-                Console.WriteLine(kv.Key + " " + kv.Value);
+                Console.WriteLine("AddressBook is Empty");
+
             }
-        }
-        public void Edit()        //this method lets the user edit the details based on their firstname
-        {
-            Console.WriteLine("\nEnter Name of address book to modify contact details");
-            string name = Console.ReadLine();
-            //checking if the name exist in dictionary
-            if (!addressBook.ContainsKey(name))
+            else   //else it will display the details of contact person
             {
-                Console.WriteLine("No address book found with this name");
-                Console.WriteLine("Please Enter Valid Name from following names:");
-                //displaying the names that are available in dictionary
-                foreach (KeyValuePair<string, List<ContactList>> tempPair in addressBook)
+                foreach (ContactList contactList in this.addressBook)
                 {
-                    Console.WriteLine(tempPair.Key);
+                    Console.WriteLine($"FirstName= {contactList.firstName} LastName= {contactList.lastName} Address= {contactList.address} state= {contactList.state} ZipCode= {contactList.zipCode} Phone= {contactList.phoneNumber} Email= {contactList.email}");
+
                 }
             }
-            else
-            {
-                ContactList contactList = new ContactList();  //here create a ContactList object
-                contacts1.Add(contactList);  //here contactlist object adding to dictionary
-            }
+
         }
 
 
-        public static void Delete(Dictionary<string, List<ContactList>> addressBook, List<ContactList> contacts1)
+        public void editContact()  //for editing the contact list
         {
 
-            Console.WriteLine("\nEnter Name of address book to delete contact details");
-            string name = Console.ReadLine();
-            if (!addressBook.ContainsKey(name))
+            if (addressBook.Count == 0)   // here checking in List there is contact or not  if no the lis is empty
             {
-                Console.WriteLine("No address book found with this name");
-                Console.WriteLine("Please Enter Valid Name from following names:");
+                Console.WriteLine("AddressBook is Empty");
 
-                foreach (KeyValuePair<string, List<ContactList>> tempPair in addressBook)
-                {
-                    Console.WriteLine(tempPair.Key);
-                }
             }
-            else
+            else  //else it will edit the contact details 
             {
-                ContactList contactList = new ContactList();  //here create a ContactList object
-                contacts1.Add(contactList);  //here contactlist object adding to dictionary
-            }
-        }
+                Console.WriteLine("enter the name which want to edit contact:");
+                string name = Console.ReadLine();
 
-        public static ContactList Equals(List<ContactList> list, String name) //here find out dublicate entry by using equals method
-        {
-            try
-            {
-                Console.WriteLine("\n here Findout the Dublicate Entry");
-                var contactObj = list.Find(p => p.firstName == name);  //here use lamda concepts
+                foreach (ContactList contactList in this.addressBook)
+                {
 
-                if (contactObj != null)
-                {
-                    Console.WriteLine("\n Dublicate is Present:", contactObj.firstName);
-                    return contactObj;
-                }
-                else
-                {
-                    Console.WriteLine("\n Dublicate is Not present.");
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
-        public static ContactList SearchName(List<ContactList> list, String name)  //here find out 
-        {
-            var contObj = list.Find(p => p.firstName == name); //here use lamda concepts
-
-            try
-            {
-                if (contObj != null)
-                {
-                    Console.WriteLine("\n Present :", contObj.firstName);
-                    return contObj;
-                }
-                else
-                {
-                    Console.WriteLine("\n Not Present.");
-                    return contObj;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
-        // Searching by city for address book and contact details
-      
-        public void SearchingByCity()
-        {
-            try
-            {
-                Console.WriteLine("Please enter the city");
-                string searchCity = Console.ReadLine();
-                //foreach loop to print name of address book and pass address book value to contact person information class
-                foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
-                {
-                    foreach (KeyValuePair<string, List<ContactList>> tempPair in addressBook)
+                    if (contactList.firstName == name)
                     {
-                        Console.WriteLine(tempPair.Value);
+                        Console.WriteLine($"FirstName= {contactList.firstName} LastName= {contactList.lastName} Address= {contactList.address} state= {contactList.state} ZipCode= {contactList.zipCode} Phone= {contactList.phoneNumber} Email= {contactList.email}");
+                        Console.WriteLine("\nthe {0} is present you can edit the details...", contactList.firstName);
+                        Console.WriteLine("enter the details");
+
+                        Console.WriteLine("Enter the First Name");
+                        contactList.firstName = Console.ReadLine();
+
+                        Console.WriteLine("Enter the Last Name");
+                        contactList.lastName = Console.ReadLine();
+
+                        Console.WriteLine("Enter the Adresss");
+                        contactList.address = Console.ReadLine();
+
+                        Console.WriteLine("Enter the State");
+                        contactList.state = Console.ReadLine();
+
+                        Console.WriteLine("Enter the Zip Code");
+                        contactList.zipCode = Console.ReadLine();
+
+                        Console.WriteLine("Enter the Phone Number");
+                        contactList.phoneNumber = Console.ReadLine();
+
+                        Console.WriteLine("Enter the Email");
+                        contactList.email = Console.ReadLine();
+
+                        Console.WriteLine("updeted detalis List");
+                        Console.WriteLine($"FirstName= {contactList.firstName} LastName= {contactList.lastName} Address= {contactList.address} state= {contactList.state} ZipCode= {contactList.zipCode} Phone= {contactList.phoneNumber} Email= {contactList.email}");
+
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("the {0} is not present in ContactList", contactList.firstName);
+
+                    }
+
+                }
+            }
+        }
+
+        public void removeContact()    // for removing the contact 
+        {
+            if (addressBook.Count == 0)      // here checking in List there is contact or not  if no the list is empty
+            {
+                Console.WriteLine("AddressBook is Empty");
+
+            }
+            else   // it will remove the contact from contact list
+            {
+                Console.WriteLine("enter the name you want to remove");
+                string name = Console.ReadLine();
+
+                foreach (ContactList contactList in this.addressBook)
+                {
+
+                    if (contactList.firstName == name)
+                    {
+                        addressBook.Remove(contactList);
+                        break;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("the {0} is not present", contactList.firstName);
+
                     }
                 }
-            }
-            //catches exception if city name does not exist
-            catch (AddressBookCustomException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Do you want to enter city again, press y for yes");
-                string checkInput = Console.ReadLine();
-                if (checkInput.ToLower() == "y")
-                {
-                    SearchingByCity();  //here recursive calling
-                }
-                else
-                {
-                    Console.WriteLine("No city entered");
 
-                }
             }
+
         }
 
-        // Searching by state to get address book and contact details
-      
-        public void SearchingByState()
+        public static void Display(Dictionary<AddressBook, string> dic1)
         {
-            //used to find custom exception, if state do not exist
-            try
+            foreach (var e in dic1)
             {
-                Console.WriteLine("Please enter the state");
-                string searchState = Console.ReadLine();
-                //foreach loop is used to print key for dictionary and pass the values of dictionary to contact person information class
-                foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
-                {
-                    foreach (KeyValuePair<string, List<ContactList>> tempPair in addressBook)
-                    {
-                        Console.WriteLine(tempPair.Value);
-                    }
-                }
-            }
-            catch (AddressBookCustomException ex)
-            {
-                //Exception message
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Do you want to enter state again, press y for yes");
-                string checkInput = Console.ReadLine();
-                if (checkInput.ToLower() == "y")
-                {
-                    //Details of state are entered again.
-                    SearchingByState();
-                }
-                else
-                {
-                    Console.WriteLine("No state entered");
-
-                }
+                Console.WriteLine("the address Book are");
+                Console.WriteLine(e.Value);
             }
         }
 
-       
-        // Getting city names is used to get all the names of city in all address books
-     
-        public void GettingCityNames()
-        {
-            //calling each address book
-            foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
-            {
-                ContactList contactList = new ContactList();  //here create a ContactList object
-                contacts1.Add(contactList);  //here contactlist object adding to dictionary
-
-                //calling method Getting CityList from contactperson information
-                //getting city list returns a hashset of cities in particular address book
-                //the cities are then added in new hashmap called citylist defined in this class
-                foreach (string city in contactList.city)
-                {
-                    cityList.Add(city);
-                }
-            }
-        }
-
-        // Getting city names is used to get all the names of city in all address books
-        
-        public void GettingStateNames()
-        {
-            //calling each address book
-            foreach (KeyValuePair<string, List<ContactList>> keyValuePair in addressBook)
-            {
-                ContactList contactList = new ContactList();  //here create a ContactList object
-                contacts1.Add(contactList);  //here contactlist object adding to dictionary
-
-                //calling method Getting StateList from contactperson information
-                //getting state list returns a hashset of cities in particular address book
-                //the cities are then added in new hashmap called statelist defined in this class
-                foreach (string state in contactList.state)
-                {
-                    stateList.Add(state);
-                }
-            }
-        }
     }
 }
